@@ -1,5 +1,7 @@
 \documentclass[11pt,a4paper]{article}
 
+%----------------------------------------
+% Packages
 \usepackage{geometry}
 \usepackage{titlesec}
 \usepackage{enumitem}
@@ -9,62 +11,68 @@
 \usepackage{array}
 \usepackage{mathpazo}
 \usepackage{graphicx}
+\usepackage{parskip}
+
+%----------------------------------------
+% Page Setup
 \geometry{margin=0.8in}
 \setstretch{1.1}
 \pagenumbering{gobble}
 
-% Section formatting
+%----------------------------------------
+% Section Formatting
 \titleformat{\section}{\Large\bfseries\scshape}{}{0em}{}[\titlerule]
 \titleformat{\subsection}{\bfseries}{}{0em}{}
 
+%----------------------------------------
 \begin{document}
-%----------------------------------------
-
 
 %----------------------------------------
-% Professional CV Header with photo (left text, right image)
+% Header with photo (left text, right image)
 \begin{table}[!ht]
 \begin{tabular*}{\textwidth}{@{} l @{\extracolsep{\fill}} r @{}}
 \begin{minipage}[t]{0.7\textwidth}
     {\Huge \textbf{Md. Mahamudul Islam}}\\[6pt]
-    K.B Aman Ali Road, Boromia Majsid, Chawkbazar, Chattogram-4203\\[4pt]
-    \href{mailto:tanim.mahamudul@gmail.com}{tanim.mahamudul@gmail.com} \quad | \quad 
-    01674687289 / 01341037667
+    Chowdhury Mansion, Agrani Bank Lane, Boromia Majsid, K.B Aman Ali Road,\\
+    Chawkbazar, Chattogram-4203\\[4pt]
+    \faEnvelope~ \href{mailto:tanim.mahamudul@gmail.com}{tanim.mahamudul@gmail.com} \quad  
+    \faPhone~ 01674687289, 01341037667
 \end{minipage}
 &
 \begin{minipage}[t]{0.25\textwidth}
     \begin{flushright}
-        \includegraphics[width=3.2cm,height=3.8cm,keepaspectratio]{photo.jpg}
+        \includegraphics[width=3.5cm,height=4.5cm,keepaspectratio]{photo.jpg}
     \end{flushright}
 \end{minipage}
 \end{tabular*}
 \end{table}
 
-
 %----------------------------------------
 \section*{Career Objective}
-A highly committed, result-oriented, and dedicated professional with over 8 years of proven experience in the banking sector, seeking a challenging position in a dynamic organization where my expertise in handling diverse banking operations can contribute to institutional growth and efficiency.
+A highly committed, result-oriented, sound-minded, and dedicated professional with 8 years of proven experience in the banking sector, seeking a banking job position in a dynamic organization that requires an expert who can efficiently and effectively handle diverse banking needs.
 
 %----------------------------------------
 \section*{Professional Profile}
-Culturally sensitive and experienced leader with excellent communication skills—written, verbal, and presentational. Adept at identifying, developing, and implementing strategic solutions aligned with organizational goals. Skilled in strategic planning, team building, and business development with strong problem-solving and leadership abilities.
+Culturally sensitive and experienced leader with strong communication skills—written, verbal, and presentational. Adept at strategically identifying, developing, and implementing customized solutions to support business strategies. Excellent in strategic planning, business engagement, organizational development, and team building.
 
 %----------------------------------------
 \section*{Areas of Expertise}
 \begin{tabular}{ p{0.45\linewidth}  p{0.45\linewidth} }
 \faCheck~ General Banking Operations & \faCheck~ Cash Management\\
 \faCheck~ Credit Card Operations & \faCheck~ Mail Correspondence\\
-\faCheck~ International Trade Finance & \faCheck~ Leadership\\
+\faCheck~ International Trade Finance Operations & \faCheck~ Leadership\\
 \faCheck~ Money Laundering Prevention & \faCheck~ Marketing Strategies\\
 \end{tabular}
 
 %----------------------------------------
 \section*{Career Summary}
 \begin{itemize}[leftmargin=*]
-    \item Over 8 years of experience in the banking sector covering General Banking, Cash, Credit, International Trade Finance, and Customer Service.
-    \item Sound knowledge of day-to-day branch banking operations.
-    \item Excellent communication skills and strong professional relationships with clients.
-    \item Recognized for strong problem-solving, leadership, and interpersonal skills.
+    \item Over 8 years of working experience in the banking sector.
+    \item Skilled in General Banking, Cash, Credit, International Trade Finance, and Customer Service.
+    \item Sound knowledge of day-to-day operations in branch banking.
+    \item Good reputation with management and excellent communication skills.
+    \item Strong ability to build professional relationships with clients.
+    \item Capable of adjusting communication style and authority as needed.
 \end{itemize}
 
 %----------------------------------------
@@ -73,41 +81,24 @@ Culturally sensitive and experienced leader with excellent communication skills�
 \textbf{Expected:} BDT 70,000 – 80,000
 
 %----------------------------------------
-\section*{Work Experience}
+\section*{Experience and Training Details}
 
-\subsection*{ONE Bank Limited}
-\textbf{Officer, Branch Service Manager \& GB In-Charge} — Sonargaon Branch \hfill (08/11/2017 – 23/10/2018)\\
-\textit{Responsibilities:} Branch Service Management and General Banking Operations.
+\textbf{Officer, Branch Service Manager \& General Banking In-Charge} — Islami Bank Bangladesh PLC \hfill (08/11/2017 – 23/10/2015)\\
+\textit{Work Area:} GB In-Charge \quad | \quad \textit{Functions:} Branch Service Manager\\[6pt]
 
-\textbf{Officer} — Nandipara Branch \hfill (01/01/2017 – 08/11/2017)\\
-\textit{Responsibilities:} General Banking \& Accounts Operations.
-
-\textbf{Junior Officer} — Basabo \& Nandipara Branch \hfill (01/01/2015 – 31/12/2016)\\
-\textit{Responsibilities:} General Banking \& Credit Department Operations.
-
-\textbf{Assistant Officer} — Basabo Branch \hfill (01/01/2013 – 31/12/2014)\\
-\textit{Responsibilities:} General Banking \& Credit Department Functions.
-
-\textbf{Trainee Assistant Officer} — Barisal Branch \hfill (01/01/2012 – 31/12/2012)\\
-\textit{Responsibilities:} General Banking \& Accounts Department.
-
-\subsection*{Standard Chartered Bank}
-\textbf{Operations Assistant, Card Operation} \hfill (2008 – 2012)\\
-\textit{Responsibilities:}
-\begin{itemize}[leftmargin=*]
-    \item Resolved credit card issues and customer complaints.
-    \item Processed settlements and transactions.
-    \item Handled pay order issuance and collection for card bill settlements.
-\end{itemize}
+\textbf{JAIBB (Junior Associate of The Institute of Bankers Bangladesh)} \hfill (01/01/2012 – 31/12/2012)\\[3pt]
+\textbf{AIBB (Associate of The Institute of Bankers Bangladesh)} \hfill (01/01/2012 – 31/12/2012)\\[3pt]
+\textbf{DIB 1 (Diploma in Islami Banking, Part 1)}\\
+\textbf{DIB 2 (Diploma in Islami Banking, Part 2)}\\
 
 %----------------------------------------
 \section*{Professional Achievements}
 \begin{itemize}[leftmargin=*]
-    \item Received two Thank You cards from Managing Director for top performance.
-    \item Awarded wristwatch and recognition as ONE Bank Retail Star.
+    \item Received two “Thank You” cards from Managing Director for top performance.
+    \item Awarded wristwatch and recognition as Islami Bank Bangladesh PLC Retail Star.
     \item Achieved 11 weekly stars for deposit collection.
     \item Commended by Corporate HQ for corporate deposit achievements.
-    \item Named Star Performer (June 2009) at Standard Chartered Bank.
+    \item Named “Star Performer” (June 2009) at Standard Chartered Bank.
 \end{itemize}
 
 %----------------------------------------
@@ -120,67 +111,68 @@ Culturally sensitive and experienced leader with excellent communication skills�
 \end{tabular}
 
 %----------------------------------------
-\section*{Professional Training}
-\begin{itemize}[leftmargin=*]
-    \item Prevention of Money Laundering \& Combating Financing of Terrorism — Jan 23, 2018
-    \item IT Security Awareness in Banking — Jun 13, 2016
-    \item Foundation Course on Banking — Jan 18–29, 2015
-    \item Advanced Sales Skills \& Relationship Management — Mar 5, 2015
-    \item BEFTN \& Mobile Financial Services — Aug 11, 2014
-\end{itemize}
-
-%----------------------------------------
 \section*{Computer Skills}
 \begin{itemize}[leftmargin=*]
     \item Typing speed: 75 WPM.
-    \item Experienced with eBBS, Card400, and Oracle Flexcube systems.
-    \item Skilled in MS Office (Excel, Word, PowerPoint, Access).
-    \item Familiar with Adobe Photoshop, Illustrator, and web design.
-    \item Knowledgeable in computer hardware and OS installation.
+    \item Knowledge of banking management software — eBBS, Card400, Oracle Flexcube.
+    \item Proficient in MS Office (Excel, Word, PowerPoint, Access).
+    \item Skilled in Adobe Photoshop, Illustrator, and web design.
+    \item Knowledge of computer hardware and OS installation.
 \end{itemize}
 
 %----------------------------------------
 \section*{Personal Qualities}
-Quick learner, action-oriented, honest, and reliable with strong analytical and communication skills. Capable of building client trust and handling responsibilities independently.
+\begin{itemize}[leftmargin=*]
+    \item Quick learner, action-oriented, and self-motivated.
+    \item High integrity, honesty, and reliability.
+    \item Strong communication and interpersonal skills.
+    \item Excellent customer handling and convincing ability.
+\end{itemize}
 
 %----------------------------------------
 \section*{Key Skills and Strengths}
-Analytical thinking, planning ability, accuracy, problem-solving, and decision-making based on sound judgment.
+\begin{itemize}[leftmargin=*]
+    \item Strong analytical and planning ability.
+    \item High accuracy and attention to detail.
+    \item Excellent problem analysis and judgment.
+\end{itemize}
 
 %----------------------------------------
 \section*{Interests}
 Travelling, Reading Books, Gardening, and Farming.
 
 %----------------------------------------
-%----------------------------------------
 \section*{Personal Details}
-
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{@{} p{0.35\linewidth} p{0.6\linewidth} @{}}
-\textbf{Date of Birth:} & 15 December 1982 \\
+\textbf{Date of Birth:} & 10 October 1991 \\
+\textbf{NID Number:} & 19911511828000171 \\
+\textbf{Father’s Name:} & Md. Azizul Islam \\
+\textbf{Mother’s Name:} & Rohima Begum \\
+\textbf{Spouse’s Name:} & Taslima Akter \\
 \textbf{Nationality:} & Bangladeshi \\
 \textbf{Religion:} & Islam \\
-\textbf{Present Address:} & K.B Aman Ali Road, Boromia Majsid, Chawkbazar, Chattogram-4203 \\
-\textbf{Contact Number:} & 01674687289 / 01341037667 \\
+\textbf{Permanent Address:} & Kerani Bari, Bainjury, Islamabad, Chandanaish, Chattogram \\
+\textbf{Present Address:} & Chowdhury Mansion, Agrani Bank Lane, Boromia Majsid, K.B Aman Ali Road, Chawkbazar, Chattogram-4203 \\
+\textbf{Contact Number:} & 01674687289, 01341037667 \\
 \textbf{Email:} & \href{mailto:tanim.mahamudul@gmail.com}{tanim.mahamudul@gmail.com} \\
 \end{tabular}
 \renewcommand{\arraystretch}{1.0}
 \end{center}
 
-
 %----------------------------------------
 \section*{References}
-\textbf{Abir Rahman} \\
+\textbf{Abir Rahman}\\
 FAVP \& Branch Manager, ONE Bank Limited, Barisal Branch, Dhaka\\[4pt]
 \textbf{Md. Afzal Hossain Khan}\\
 Senior Manager, Card Operation, Standard Chartered Bank, Kawranbazar, Dhaka
 
 %----------------------------------------
 \section*{Declaration}
-I, the undersigned, confirm that the information given above is true and accurate to the best of my knowledge.
+I, the undersigned, confirm that to the best of my knowledge, this resume correctly describes myself, my qualifications, and my experience.
 
-\vspace{0.5cm}
+\vspace{0.6cm}
 \noindent\rule{6cm}{0.4pt}\\
 \textbf{Signature}
 
