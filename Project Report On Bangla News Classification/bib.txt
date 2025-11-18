@@ -1,0 +1,29 @@
+@article{kabir2015,
+  author    = {Kabir, Faisal and Siddique, Shahnewaz and Kotwal, Md. and Huda, Mohammad Nurul},
+  title     = {Bangla Text Document Categorization Using {SVM} and {Naive Bayes}},
+  journal   = {International Journal of Advanced Research in Artificial Intelligence},
+  year      = {2015},
+  volume    = {4},
+  number    = {6}
+}
+
+@inproceedings{rahman2018,
+  author    = {Rahman, Aunal and Dey, Emon Kumar},
+  title     = {Bangla Document Classification Using Convolutional Neural Network},
+  booktitle = {International Conference on Bangla Speech and Language Processing},
+  year      = {2018}
+}
+
+@article{hossain2021banglabert,
+  author    = {Hossain, Md. Zahidul and others},
+  title     = {{BanglaBERT}: Language Model Pretraining and Benchmarks for {Bangla}},
+  journal   = {arXiv preprint arXiv:2101.09737},
+  year      = {2021}
+}
+
+@article{conneau2020unsupervised,
+  author    = {Conneau, Alexis and others},
+  title     = {Unsupervised Cross-lingual Representation Learning at Scale},
+  journal   = {Proceedings of ACL},
+  year      = {2020}
+}

@@ -1,0 +1,161 @@
+\section{Dataset}
+\label{sec:dataset}
+
+This section provides a detailed description of the corpus used in this research: a balanced, medium-scale dataset of Bangla news articles specifically designed for multi-class text classification tasks.
+
+\subsection{Source}
+\label{subsec:source}
+
+The dataset is publicly available on Mendeley Data under the title ``Bangla News Articles Dataset for Text Classification'' \cite{bangla-news-dataset-2021}. It can be accessed at:
+
+\begin{center}
+    \url{https://data.mendeley.com/datasets/ntg3m8mw8d/1}
+\end{center}
+
+Articles were systematically collected from seven leading Bangla-language online news portals in Bangladesh:
+\begin{itemize}
+    \item Prothom Alo
+    \item Jugantor
+    \item Ittefaq
+    \item Bdnews24
+    \item Kaler Kantho
+    \item Bangla Tribune
+    \item Samakal
+\end{itemize}
+
+These sources are among the most widely read and authoritative digital newspapers in Bangladesh, ensuring high journalistic quality and topical diversity. The original distribution consists of individual plain-text files organized by category. For experimental convenience, all articles were merged into a single CSV file named \texttt{bangla\_news.csv} with the following two columns:
+\begin{itemize}
+    \item \texttt{text} — complete raw article content
+    \item \texttt{label} — topical category
+\end{itemize}
+
+\subsection{Sample}
+\label{subsec:sample}
+
+Five representative articles (one from each class) are presented in Figure~\ref{fig:samples}. Due to the exclusive use of Bangla script and to guarantee perfect rendering in any PDF viewer, the text is displayed as a high-resolution image.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/bangla_dataset_samples.png}
+    \caption{Five sample articles from the dataset (one per category). The text column is truncated for display purposes.}
+    \label{fig:samples}
+\end{figure}
+
+Common characteristics observed in raw samples include web-scraping artifacts (escaped quotes, newlines), location prefixes, English proper nouns, and mixed punctuation usage.
+
+\subsection{Exploratory Data Analysis (EDA)}
+\label{subsec:eda}
+
+The dataset contains exactly 2,500 articles, perfectly balanced across five topical categories (500 articles each), as shown in Table~\ref{tab:class-dist} and Figure~\ref{fig:class-bar}.
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Class Distribution}
+    \label{tab:class-dist}
+    \begin{tabular}{lcc}
+        \toprule
+        Category (Bangla) & Category (English) & Number of Articles \\
+        \midrule
+        অর্থনীতি         & Economy           & 500 \\
+        বিনোদন           & Entertainment     & 500 \\
+        আন্তর্জাতিক      & International     & 500 \\
+        খেলাধুলা         & Sports            & 500 \\
+        রাষ্ট্র/দেশ       & State             & 500 \\
+        \midrule
+        \textbf{Total}    &                   & \textbf{2,500} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/class_distribution_bar.png}
+    \caption{Perfectly balanced class distribution (500 articles per category).}
+    \label{fig:class-bar}
+\end{figure}
+
+Key statistics of article length (measured in words after whitespace tokenization) are summarized in Table~\ref{tab:length-stats}.
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Article Length Statistics}
+    \label{tab:length-stats}
+    \begin{tabular}{lr}
+        \toprule
+        Statistic                  & Value \\
+        \midrule
+        Total articles             & 2,500 \\
+        Mean length (words)        & 248.31 \\
+        Median length              & 235 \\
+        Std. deviation             & 112.41 \\
+        Minimum length             & 52 \\
+        Maximum length             & 1,203 \\
+        95th percentile            & 492 \\
+        99th percentile            & 678 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The length distribution is moderately right-skewed. A maximum sequence length of 500 tokens preserves more than 95\% of all articles without truncation.
+
+\subsection{Preprocessing}
+\label{subsec:preprocessing}
+
+A systematic and reproducible preprocessing pipeline was applied to convert raw text into a format suitable for deep learning models. All steps were carefully designed to prevent information leakage (vocabulary was built exclusively on the training split).
+
+The complete pipeline consists of the following stages:
+
+\begin{enumerate}
+    \item \textbf{Text Cleaning}
+    \begin{itemize}
+        \item Removal of HTML/XML escape sequences (\texttt{\textbackslash"}, \texttt{\textbackslash n}, \texttt{\textbackslash r})
+        \item Stripping of URLs and email patterns
+        \item Removal of all punctuation (Bangla danda \texttt{।} and Latin marks)
+        \item Collapsing multiple whitespace into single spaces
+        \item Optional lowercasing (applied — minor but consistent gain observed)
+    \end{itemize}
+
+    \item \textbf{Stratified Splitting}
+    \begin{itemize}
+        \item Training set: 2,000 articles (80\%)
+        \item Validation set: 250 articles (10\%)
+        \item Test set: 250 articles (10\%)
+        \item Stratification enforced at every split to maintain exact class balance
+    \end{itemize}
+
+    \item \textbf{Vocabulary Construction (training set only)}
+    \begin{itemize}
+        \item Simple whitespace tokenization
+        \item Frequency ranking of unigrams
+        \item Retention of the 9,998 most frequent tokens
+        \item Addition of special tokens: \texttt{<PAD>} (index 0) and \texttt{<UNK>} (index 1)
+        \item Final vocabulary size: 10,000 (covers approximately 98.7\% of training tokens)
+    \end{itemize}
+
+    \item \textbf{Numericalization and Sequence Formatting}
+    \begin{itemize}
+        \item Conversion of tokens to integer indices using the constructed vocabulary
+        \item Truncation of sequences longer than 500 tokens (right-side)
+        \item Zero-padding of shorter sequences to length 500
+    \end{itemize}
+\end{enumerate}
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Final Preprocessing Configuration}
+    \label{tab:preprocess-config}
+    \begin{tabular}{ll}
+        \toprule
+        Parameter                  & Value \\
+        \midrule
+        Vocabulary size            & 10,000 \\
+        Max sequence length        & 500 \\
+        Padding token index        & 0 \\
+        Unknown token index        & 1 \\
+        Training / Val / Test      & 2,000 / 250 / 250 \\
+        Class balance              & Perfect in all splits \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+This rigorous preprocessing methodology ensures reproducibility, eliminates data leakage, and produces clean, fixed-length integer sequences optimally suited for training recurrent neural networks on Bangla text.
