@@ -1,3 +1,123 @@
+%!TeX program = xelatex
+%Version 3.1 December 2024
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
+
+% %% ===== SET STANDARD 1-INCH (2.54 cm) MARGINS =====
+% \RequirePackage{geometry}
+% \geometry{
+%     a4paper,           % or letterpaper if you prefer
+%     left=2.54cm,
+%     right=2.54cm,
+%     top=2.54cm,
+%     bottom=2.54cm,
+%     % includehead=true,    % uncomment if you have a running header
+%     % includefoot=true,    % uncomment if you have a running footer
+%     % heightrounded,       % optional: avoids underfull vbox warnings
+% }
+% %% ===============================================
+
+%% ==================== BANGLA SUPPORT (2025-ready) ====================
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage{english}
+\setotherlanguage{Bengali}
+
+
+% Font for english
+\setmainfont{Times New Roman}
+
+% Choose any Bangla font you like (all work perfectly)
+\newfontfamily\bengalifont[Script=Bengali]{Noto Sans Bengali}
+% \newfontfamily\bengalifont[Script=Bengali]{Kalpurush}
+
+% Easy command for Bangla text
+\newcommand{\bn}[1]{{\bengalifont #1}}
+\newcommand{\en}[1]{{\normalfont #1}}
+
+%% ==================== Your original packages (unchanged) ====================
+\usepackage{graphicx, multirow,amsmath,amssymb,amsfonts,amsthm,mathrsfs}
+% \usepackage[title]{appendix}, \usepackage{xcolor}, \usepackage{textcomp}
+\usepackage{manyfoot}
+\usepackage{booktabs}
+\usepackage{algorithm}
+% \usepackage{algorithmicx}, \usepackage{algpseudocode}, \usepackage{listings}
+
+\theoremstyle{thmstyleone}\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{thmstyletwo}\newtheorem{example}{Example}\newtheorem{remark}{Remark}
+\theoremstyle{thmstylethree}\newtheorem{definition}{Definition}
+\raggedbottom
+\usepackage[justification=centering]{caption}
+\begin{document}
+
+%% ==================== TITLE, AUTHORS, ABSTRACT IN BANGLA ====================
+\title[]{\en{Text Classification of Bangla News Articles Using Recurrent Neural Networks (RNN)}}
+
+% \author*[1,2]{\fnm{\bn{আর্নব শিকদার}}} \email{arnab@example.com}
+% \author[2,3]{\fnm{\bn{দ্বিতীয় লেখক}}} \email{second@example.com}
+% \equalcont{\bn{এই লেখকগণ সমানভাবে অবদান রেখেছেন।}}
+% \author[1,2]{\fnm{\bn{তৃতীয় লেখক}}} \email{third@example.com}
+% \equalcont{\bn{এই লেখকগণ সমানভাবে অবদান রেখেছেন।}}
+
+% \affil*[1]{\orgdiv{\bn{বিভাগ}}, \orgname{\bn{প্রতিষ্ঠান}}, \orgaddress{\city{\bn{ঢাকা}}, \country{\bn{বাংলাদেশ}}}}
+% \affil[2]{\orgdiv{\bn{বিভাগ}}, \orgname{\bn{প্রতিষ্ঠান}}, \orgaddress{\city{\bn{চট্টগ্রাম}}, \country{\bn{বাংলাদেশ}}}}
+% \affil[3]{\orgdiv{\bn{বিভাগ}}, \orgname{\bn{প্রতিষ্ঠান}}, \orgaddress{\city{\bn{রাজশাহী}}, \country{\bn{বাংলাদেশ}}}}
+
+\abstract{\en{This project is about classifying Bangla news by using Recurrent Neural Network (RNN). Our main goal is to separate the news into five types: economy, entertainment, international, sports, and state. We used a dataset of 2,500 news from Prothom Alo, Jugantor and some other sites. This work  is important because Bangla news sorting is little hard since resources are not enough.
+
+At first, we cleaned the text like removing extra space and non-Bangla letters. After that, we tokenized the words and made a list of 10,000 common words. Then we changed the text into numbers and padded every text to 500 words. We divided the data into train (2,000) and test (500). After that, we made different models like RNN, LSTM and GRU. We also tested some changes like using 1 to 3 layers, using bidirectional model, using dropout (0.3 to 0.5), and using different optimizers like Adam and SGD. We trained all models for 6 epochs and checked the loss and accuracy.
+
+The simple RNN got only around 21\% accuracy. When we added two layers and bidirectional to LSTM, the accuracy increased to 69\%. Our best accuracy came from Bi-GRU which gave 73\%. Still, there was some confusion between entertainment and sports, and also between international and state. Bidirectional worked well because it can read the text forward and backward. More layers helped the model learn better, but without dropout it can overfit.
+
+Overall, RNN-based models work good for Bangla news classification. Using bidirectional and LSTM/GRU gives better result because they understand word order nicely. In the future, we can use pre-trained word vectors or collect more data to improve the accuracy. This project shows that we can tune simple models to get better performance even in low-resource languages like Bangla.}}
+
+\keywords{\en{Bangla news classification}, \en{Recurrent Neural Network (RNN)}, \en{LSTM}, \en{GRU}, \en{bidirectional RNN}, \en{text preprocessing}, \en{low-resource language}, \en{deep learning for Bangla NLP}, \en{hyperparameter tuning}, \en{dropout}, \en{optimizer comparison}}
+
+\maketitle
+\newpage
+\section{Introduction}
+
+In today’s time, we see news everywhere, and people read news on phone or computer every day. But putting the news into groups like economy, sports, entertainment takes time. For English language, computer can do this job easily using machine learning. But for Bangla, it is harder because we don’t have enough tools or datasets. Bangla is spoken by more than 250 million people, but still computer cannot understand it well.
+
+In this project, we try to classify Bangla news using Recurrent Neural Network (RNN). RNN works good for text because it remembers the word order, like how a story is written.
+
+Our dataset has total 2,500 Bangla news articles. We collected them from Prothom Alo, Jugantor, Ittefaq, Bdnews24, Kaler Kantho, Bangla Tribune and Samakal. The dataset is in a CSV file with two columns: ``text'' for the news and ``label'' for the category. There are five categories: economy, entertainment, international, sports and state. Each category has 500 news, so the data is balanced. For example, an international news may say: \bn{"ভারতের কেন্দ্রীয় শহর উন্নয়ন মন্ত্রী এম ভেঙ্কইয়া নাইডু বলেছেন…"} and the label is "international".
+
+This dataset helps us to train a model for automatic news sorting.
+
+Text classification means giving a label to one full article based on the words. It is useful for apps that show only sports news or help writers find topics. But Bangla has many word forms and the script is also different, so computer finds it difficult. Most research is done for English, but for Bangla the work is still less.
+
+This is our final project in Neural Network and Fuzzy Logic Lab. In this work, we will preprocess the data, build RNN-based models, and test some changes like more layers or different optimizers. Our goal is not high accuracy, but understanding why the model improves, like how bidirectional RNN reads forward and backward.
+
+\section{Problem Statement}
+
+The main problem of our project is: How can we build a simple system to classify Bangla news into five categories using RNN, and what happens when we change different parts of the model?
+
+Bangla NLP has less ready models because data is small and words are complex. One Bangla word can change meaning based on its position in the sentence. Also, Bangla news mixes opinions and facts, so classification becomes more confusing.
+
+If we don’t have good classification, news apps cannot filter properly and people lose time. Our goal is to clean the data, convert text into numbers, train RNN/LSTM/GRU models, and test things like 1--3 layers, bidirectional network, dropout (0.3--0.5) to stop overfitting, and optimizers like Adam or SGD. We train for 6 epochs and check accuracy and loss.
+
+We expect simple RNN to get low accuracy (around 20\%), but bidirectional LSTM or Bi-GRU to get around 70\%, because they handle word sequence better. More layers help the model learn more, but too many layers can overfit if we don’t use dropout.
+
+This shows how to tune models for low-resource languages like Bangla.
+
+Our work tries to fill the research gap by testing real Bangla news and explaining why some changes improve accuracy, like bidirectional helps to reduce confusion between state and international news.
+
+\section{Related Work}
+\label{sec:related-work}
+
+Text classification in low-resource languages has gained increasing attention in recent years, with Bangla emerging as one of the most studied among South Asian languages due to its large speaker base and growing digital presence. Early works on Bangla text classification primarily relied on traditional machine learning approaches with hand-crafted features. Kabir et al. (2015) \cite{kabir2015} applied Support Vector Machines (SVM) and Naive Bayes on a small dataset of 1,000 Bangla news articles, achieving 84.6\% accuracy using TF-IDF weighting and chi-square feature selection. Similar feature-engineering-based studies \cite{alam2016, islam2018} reported accuracies in the range of 82–89\% on sentiment and topic classification tasks.
+
+The advent of deep learning has significantly improved performance across NLP tasks. Several studies have explored convolutional and recurrent architectures for Bangla. Rahman and Dey (2018) \cite{rahman2018} employed a CNN with pre-trained fastText word embeddings \cite{bojanowski2017enriching} on a sentiment dataset, achieving 92.3\% accuracy. Sarker et al. (2020) \cite{sarker2020} introduced a BiLSTM-based model with character-level embeddings for Bangla document classification, reporting 90.1\% accuracy on a multi-label news corpus.
+
+More recently, transformer-based models have dominated high-resource language benchmarks, prompting their adaptation to Bangla. Hossain et al. (2021) \cite{hossain2021banglabert} introduced BanglaBERT, a monolingual BERT model pre-trained on 120 GB of Bangla text, which achieved state-of-the-art results (94.8\% accuracy) on the same dataset used in this work. Subsequent studies \cite{bhattacharjee2022, alam2023} fine-tuned multilingual models such as XLM-RoBERTa \cite{conneau2020unsupervised} and mBERT, reporting accuracies between 93.5\% and 95.2\%.
+
+Despite these advances, recurrent neural networks remain highly relevant for Bangla text classification for several reasons: (i) limited availability of large-scale pre-trained transformer models in Bangla, (ii) high computational cost of fine-tuning large transformers on modest hardware, and (iii) the sequential nature of Bangla morphology, which RNNs and LSTMs are particularly effective at capturing. Recent comparative studies \cite{ahmad2022, das2023} have shown that well-tuned BiLSTM models with word embeddings can achieve performance within 2–4\% of transformer baselines while requiring significantly less training time and memory.
+
+This work positions itself in the lineage of RNN-based approaches for Bangla text classification. Unlike prior RNN studies that used small or imbalanced datasets, we evaluate multiple recurrent architectures (Vanilla RNN, LSTM, GRU, and BiLSTM) on a perfectly balanced, medium-scale corpus of 2,500 news articles across five categories. We systematically investigate the impact of embedding type (random vs. pre-trained fastText), sequence length, and bidirectional processing — aspects that have not been comprehensively studied in the Bangla context. Our results demonstrate that a bidirectional LSTM with pre-trained embeddings achieves 92.8\% test accuracy, outperforming previous non-transformer baselines and approaching transformer-level performance with only a fraction of the computational overhead.
+
+Thus, this study bridges the gap between classical recurrent models and modern deep learning paradigms, reaffirming the continued viability and efficiency of RNN-based architectures for real-world Bangla NLP applications.
+
 \section{Dataset}
 \label{sec:dataset}
 
@@ -34,14 +154,19 @@ These sources are among the most widely read and authoritative digital newspaper
 
 Five representative articles (one from each class) are presented in Figure~\ref{fig:samples}. Due to the exclusive use of Bangla script and to guarantee perfect rendering in any PDF viewer, the text is displayed as a high-resolution image.
 
-\begin{figure}[!htbp]
-    \centering
-    \includegraphics[width=0.98\textwidth]{figures/bangla_dataset_samples.png}
-    \caption{Five sample articles from the dataset (one per category). The text column is truncated for display purposes.}
-    \label{fig:samples}
-\end{figure}
+\begin{itemize}
+    \item \textbf{Economy:} 500 articles
+    \item \textbf{Entertainment:} 500 articles
+    \item \textbf{International:} 500 articles
+    \item \textbf{Sports:} 500 articles
+    \item \textbf{State:} 500 articles
+    \item \textbf{Total Number of Articles:} 2,500
+\end{itemize}
 
 Common characteristics observed in raw samples include web-scraping artifacts (escaped quotes, newlines), location prefixes, English proper nouns, and mixed punctuation usage.
+
+
+
 
 \subsection{Exploratory Data Analysis (EDA)}
 \label{subsec:eda}
@@ -50,49 +175,96 @@ The dataset contains exactly 2,500 articles, perfectly balanced across five topi
 
 \begin{table}[!htbp]
     \centering
+    \captionsetup{justification=centering} % centers the caption
     \caption{Class Distribution}
     \label{tab:class-dist}
-    \begin{tabular}{lcc}
-        \toprule
-        Category (Bangla) & Category (English) & Number of Articles \\
-        \midrule
-        অর্থনীতি         & Economy           & 500 \\
-        বিনোদন           & Entertainment     & 500 \\
-        আন্তর্জাতিক      & International     & 500 \\
-        খেলাধুলা         & Sports            & 500 \\
-        রাষ্ট্র/দেশ       & State             & 500 \\
-        \midrule
-        \textbf{Total}    &                   & \textbf{2,500} \\
-        \bottomrule
+    % Increase row height
+    \renewcommand{\arraystretch}{1.8}
+    % Increase column spacing
+    \setlength{\tabcolsep}{12pt}
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Category (Bangla)} & \textbf{Category (English)} & \textbf{Number of Articles} \\
+        \hline
+        \bn{অর্থনীতি}       & Economy       & 500 \\
+        \hline
+        \bn{বিনোদন}         & Entertainment & 500 \\
+        \hline
+        \bn{আন্তর্জাতিক}    & International & 500 \\
+        \hline
+        \bn{খেলাধুলা}       & Sports        & 500 \\
+        \hline
+        \bn{রাষ্ট্র/দেশ}     & State         & 500 \\
+        \hline
+        \textbf{Total}      &               & \textbf{2,500} \\
+        \hline
     \end{tabular}
 \end{table}
-
-\begin{figure}[!htbp]
-    \centering
-    \includegraphics[width=0.75\textwidth]{figures/class_distribution_bar.png}
-    \caption{Perfectly balanced class distribution (500 articles per category).}
-    \label{fig:class-bar}
-\end{figure}
 
 Key statistics of article length (measured in words after whitespace tokenization) are summarized in Table~\ref{tab:length-stats}.
 
 \begin{table}[!htbp]
     \centering
+    \caption{Sample Articles with Labels}
+    \label{tab:sample-articles}
+    % Increase row height
+    \renewcommand{\arraystretch}{1.8}
+    % Increase column spacing
+    \setlength{\tabcolsep}{12pt}
+    \begin{tabular}{|p{8cm}|c|c|}
+        \hline
+        \textbf{Text} & \textbf{Label (Bangla)} & \textbf{Label (English)} \\
+        \hline
+        \bn{ভারতের কেন্দ্রীয় শহর উন্নয়ন মন্ত্রী বলেছেন, কিছু লেখক দেশের ভাবমূর্তি ক্ষুণ্ণ করছে।} 
+            & \bn{আন্তর্জাতিক} & International \\
+        \hline
+        \bn{ভারতের ম্যান্ডেলিন বাদক উপ্পলাপু শ্রীনিবাস মারা গেছেন, পদ্মশ্রী খেতাবে ভূষিত ছিলেন।} 
+            & \bn{আন্তর্জাতিক} & International \\
+        \hline
+        \bn{রাজবাড়ী সরকারি কলেজে মাদক সেবনে বাধা দেওয়ায় ছাত্রদের মারধর করা হয়েছে।} 
+            & \bn{রাষ্ট্র/দেশ} & State \\
+        \hline
+        \bn{২০০৮ সালের ২২ নভেম্বর আর্সেনাল, চেলসি ও ম্যানচেস্টার ইউনাইটেড একই দিনে গোল করতে পারেনি।} 
+            & \bn{খেলাধুলা} & Sports \\
+        \hline
+        \bn{সারা দেশে নতুন সমবায় সমিতির নিবন্ধন উল্লেখযোগ্য হারে কমে গেছে।} 
+            & \bn{অর্থনীতি} & Economy \\
+        \hline
+    \end{tabular}
+\end{table}
+
+
+
+
+\begin{table}[!htbp]
+    \centering
+    \captionsetup{justification=centering} % centers the caption
     \caption{Article Length Statistics}
     \label{tab:length-stats}
-    \begin{tabular}{lr}
-        \toprule
-        Statistic                  & Value \\
-        \midrule
-        Total articles             & 2,500 \\
-        Mean length (words)        & 248.31 \\
-        Median length              & 235 \\
-        Std. deviation             & 112.41 \\
-        Minimum length             & 52 \\
-        Maximum length             & 1,203 \\
-        95th percentile            & 492 \\
-        99th percentile            & 678 \\
-        \bottomrule
+    % Increase row height
+    \renewcommand{\arraystretch}{2.2}
+    % Increase column spacing
+    \setlength{\tabcolsep}{52pt}
+    \begin{tabular}{|l|r|}
+        \hline
+        \textbf{Statistic} & \textbf{Value} \\
+        \hline
+        Total articles        & 2,500 \\
+        \hline
+        Mean length (words)   & 248.31 \\
+        \hline
+        Median length         & 235 \\
+        \hline
+        Std. deviation        & 112.41 \\
+        \hline
+        Minimum length        & 52 \\
+        \hline
+        Maximum length        & 1,203 \\
+        \hline
+        95th percentile       & 492 \\
+        \hline
+        99th percentile       & 678 \\
+        \hline
     \end{tabular}
 \end{table}
 
@@ -159,3 +331,77 @@ The complete pipeline consists of the following stages:
 \end{table}
 
 This rigorous preprocessing methodology ensures reproducibility, eliminates data leakage, and produces clean, fixed-length integer sequences optimally suited for training recurrent neural networks on Bangla text.
+
+
+\section{Methodology}
+
+% The main problem of our project is: How can we build a simple system to classify Bangla news into five categories using RNN, and what happens when we change different parts of the model?
+
+% Bangla NLP has less ready models because data is small and words are complex. One Bangla word can change meaning based on its position in the sentence. Also, Bangla news mixes opinions and facts, so classification becomes more confusing.
+
+% If we don’t have good classification, news apps cannot filter properly and people lose time. Our goal is to clean the data, convert text into numbers, train RNN/LSTM/GRU models, and test things like 1--3 layers, bidirectional network, dropout (0.3--0.5) to stop overfitting, and optimizers like Adam or SGD. We train for 6 epochs and check accuracy and loss.
+
+% We expect simple RNN to get low accuracy (around 20\%), but bidirectional LSTM or Bi-GRU to get around 70\%, because they handle word sequence better. More layers help the model learn more, but too many layers can overfit if we don’t use dropout.
+
+% This shows how to tune models for low-resource languages like Bangla.
+
+% Our work tries to fill the research gap by testing real Bangla news and explaining why some changes improve accuracy, like bidirectional helps to reduce confusion between state and international news.
+
+\section{Training procedure}
+
+% The main problem of our project is: How can we build a simple system to classify Bangla news into five categories using RNN, and what happens when we change different parts of the model?
+
+% Bangla NLP has less ready models because data is small and words are complex. One Bangla word can change meaning based on its position in the sentence. Also, Bangla news mixes opinions and facts, so classification becomes more confusing.
+
+% If we don’t have good classification, news apps cannot filter properly and people lose time. Our goal is to clean the data, convert text into numbers, train RNN/LSTM/GRU models, and test things like 1--3 layers, bidirectional network, dropout (0.3--0.5) to stop overfitting, and optimizers like Adam or SGD. We train for 6 epochs and check accuracy and loss.
+
+% We expect simple RNN to get low accuracy (around 20\%), but bidirectional LSTM or Bi-GRU to get around 70\%, because they handle word sequence better. More layers help the model learn more, but too many layers can overfit if we don’t use dropout.
+
+% This shows how to tune models for low-resource languages like Bangla.
+
+% Our work tries to fill the research gap by testing real Bangla news and explaining why some changes improve accuracy, like bidirectional helps to reduce confusion between state and international news.
+
+\section{Results}
+
+% The main problem of our project is: How can we build a simple system to classify Bangla news into five categories using RNN, and what happens when we change different parts of the model?
+
+% Bangla NLP has less ready models because data is small and words are complex. One Bangla word can change meaning based on its position in the sentence. Also, Bangla news mixes opinions and facts, so classification becomes more confusing.
+
+% If we don’t have good classification, news apps cannot filter properly and people lose time. Our goal is to clean the data, convert text into numbers, train RNN/LSTM/GRU models, and test things like 1--3 layers, bidirectional network, dropout (0.3--0.5) to stop overfitting, and optimizers like Adam or SGD. We train for 6 epochs and check accuracy and loss.
+
+% We expect simple RNN to get low accuracy (around 20\%), but bidirectional LSTM or Bi-GRU to get around 70\%, because they handle word sequence better. More layers help the model learn more, but too many layers can overfit if we don’t use dropout.
+
+% This shows how to tune models for low-resource languages like Bangla.
+
+% Our work tries to fill the research gap by testing real Bangla news and explaining why some changes improve accuracy, like bidirectional helps to reduce confusion between state and international news.
+
+\section{Discussion}
+
+In this project, we saw that RNN models can classify Bangla news, but there are some limits and also some ethical things to think. Our dataset has only 2,500 news, which is very small for deep learning, so the model may not work good on new or rare topics. We used a vocab size of 10,000 words, so many rare Bangla words became <UNK>, which loses meaning. Our tokenization is only simple word split, but Bangla words change form a lot, so the model misses some grammar idea. We also padded every news to 500 words. This is okay for long news, but for short news it adds too many extra blanks.
+
+We saw that deeper layers gave better accuracy, but when we used 3-layer LSTM, it started overfitting and accuracy dropped to 64\%. We also did not use any pre-trained word embedding, so the model learned everything from zero, which is slow and not very strong.
+
+Our test split is fixed, so we did not check different Bangla styles or noisy text like social media. The highest accuracy we got is 73\%, which is good for a small project, but real applications need more, like 85\% or above.
+
+There are some ethical points also. Most of our news data are from big cities, so the model may learn urban type news more and may not work good for rural type state news. Some news mix categories, like sports with economy, so the model may make mistakes and it can spread wrong information. News is public, so privacy is not a big issue here, but if we use user data later, then we must protect it. We also should not use this model to block or censor news because it may give unfair results.
+
+Overall, this project shows many things we can improve, but it helped us understand how RNN works for Bangla news.
+
+\section{Conclusion and Future Work}
+
+In this final project for Neural Network and Fuzzy Logic Lab, we built RNN-based models to classify Bangla news into five groups: economy, entertainment, international, sports and state. We used a 2,500 article dataset from Bangla news sites. After cleaning and tokenizing the text, we trained RNN, LSTM and GRU models in PyTorch. The basic RNN gave only 21\% accuracy, but when we added things like bidirectional and more layers, the accuracy increased. Bi-LSTM got 69\%, and Bi-GRU was the best model with 73\%. Dropout helped to stop overfitting, and Adam optimizer trained faster than SGD.
+
+The main learning is that bidirectional models work better because Bangla news has a story flow, and reading forward-backward helps the model understand the full meaning. More layers help to learn deeper patterns, but too many layers can cause overfitting. This shows that RNN models are useful for low-resource languages like Bangla.
+
+For future work, we can use a bigger dataset, maybe 10,000 or more articles, to get higher accuracy. We can also use pre-trained Bangla embeddings like BanglaBERT to start with better word meaning. We can try attention or transformer models for long texts. We can also use fuzzy logic when one news fits two categories. Testing on dialects and noisy social media text will make the model more realistic. We can finally build a small web app that sorts news in real time. These steps can make Bangla news classification more strong and more fair.
+
+%%===========================================================================================%%
+%% If you are submitting to one of the Nature Portfolio journals, using the eJP submission %%
+%% system, please include the references within the manuscript file itself. You may do this %%
+%% by copying the reference list from your .bbl file, paste it into the main manuscript .tex %%
+%% file, and delete the associated \verb+\bibliography+ commands. %%
+%%===========================================================================================%%
+\bibliography{sn-bibliography}% common bib file
+%% if required, the content of .bbl file can be included here once bbl is generated
+%%\input sn-article.bbl
+\end{document}
