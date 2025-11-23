@@ -1,0 +1,7 @@
+{
+  "economy": 0,
+  "entertainment": 1,
+  "international": 2,
+  "sports": 3,
+  "state": 4
+}

@@ -1,0 +1,36 @@
+Project Title: Text Classification of Bangla News Articles Using Recurrent Neural Networks (RNN)
+
+Submitted Files & Brief Description:
+
+1. news_dataset.csv                  - Original dataset containing 2500 Bangla news articles with two columns: text (news content) and label (5 classes: economy, entertainment, international, sports, state)
+
+2. Text_Classification_OF_Bangla_New_Articles_Using_RNN_(Final_NNFLL_Project).ipynb  
+   - Main Jupyter notebook containing complete implementation including:
+     • Data loading and cleaning
+     • Bangla text preprocessing and custom tokenization
+     • Vocabulary building (10k words)
+     • PyTorch Dataset & DataLoader
+     • Multiple RNN experiments (Basic RNN, LSTM, GRU, Bi-LSTM, Bi-GRU)
+     • Hyperparameter variations (layers, dropout, optimizers, bidirectional)
+     • Training loops with accuracy tracking
+     • Comparative analysis and result tables
+     • Best model saving (best_model_final.pth)
+
+3. best_model_final.pth              - Saved state_dict of the highest performing model (Bi-GRU with 72.8% test accuracy)
+
+4. vocab.json                        - Vocabulary mapping (word → index) used during training
+
+5. id2label.json                     - Mapping from class index to label name
+6. label2id.json                     - Mapping from label name to class index
+
+7. requirements.txt                  - List of required Python packages (torch, pandas, numpy, scikit-learn, matplotlib, etc.)
+
+8. SUBMISSION_CHECKLIST.txt          - This file – summary of all submitted files
+
+Key Results Achieved:
+- Tested 7+ different RNN architectures
+- Best Test Accuracy: 72.8% (Bidirectional GRU)
+- Significant improvement from baseline RNN (21%) to final Bi-GRU model
+- All experiments properly documented with observations on impact of layers, dropout, bidirectional, optimizer etc.
+
+Project completed as part of Neural Network and Fuzzy Logic Laboratory (NNFLL) final assignment.
